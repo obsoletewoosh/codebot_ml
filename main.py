@@ -37,5 +37,5 @@ if __name__ == '__main__':
 
     print(f"The similarity between sentence one and two are: {similarity*100:.0f}%")
 
-
+    #Ok
 
