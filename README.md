@@ -3,6 +3,12 @@
 > This is a project for group 3 for the chatbot project
 > :)
 
+# Importing Packages using Pycharm
+1. Open project settings (File > Settings)
+2. Open Python Interpreter
+3. Press the (+) button at the top
+4. Type in the package name and press install (if it doesn't appear, press the reload button)
+
 # Resources to use!
 1. [Attention is all you need](https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
 2. [spaCY library website](https://spacy.io/), [nltk documentation](https://www.nltk.org/)
@@ -14,4 +20,4 @@
 
 # Project links
 - [Canva presentation](https://www.canva.com/design/DAFn9RvzgCQ/dk9Qgj2STaG24-6P83dszA/edit?utm_content=DAFn9RvzgCQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-- 
+- [Initial Plan](https://www.canva.com/design/DAFn9gO0YVA/9wI72pA60whidJusiAGvyg/edit?utm_content=DAFn9gO0YVA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
