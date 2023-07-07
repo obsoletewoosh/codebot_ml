@@ -7,6 +7,8 @@ import en_core_web_md
 
 
 class ChatBot:
+    
+
     def __init__(self, language_model, min_similarity):
         self.language_model = language_model
         self.nlp = spacy.load(self.language_model)
@@ -20,7 +22,7 @@ class ChatBot:
             return self.language_model == other.language_model
         return False
 
-    def respond(self, msg):
+    def respondTo(self, msg):
         guide_statement = self.nlp("You are a chatbot who wants to help the user answer their question.")
         statement = self.nlp(msg)
 

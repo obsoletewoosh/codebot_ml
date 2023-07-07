@@ -40,7 +40,7 @@ if __name__ == '__main__':
     # print(tokens)
 
     a = ChatBot(language_model='en_core_web_md', min_similarity=0.50)
-    a.respond("I really want to go to New York... Or Rhode Island! The school named Brown is really interesting! Where is Brown and is it nice?")
+    a.respondTo("I really want to go to New York... Or Rhode Island! The school named Brown is really interesting! Where is Brown and is it nice?")
 
     # doc1 = nlp(input("Insert sentence one!"))
     # doc2 = nlp(input("Insert sentence two!"))
