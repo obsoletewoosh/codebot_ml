@@ -3,10 +3,13 @@ import en_core_web_sm
 import en_core_web_trf
 
 nlp = None
-
+efficient_mode = None
 
 def __init__(efficient):
     global nlp
+    global efficient_mode
+
+    efficient_mode = efficient
 
     if efficient:
         nlp = spacy.load('en_core_web_sm')
