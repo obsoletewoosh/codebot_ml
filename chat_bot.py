@@ -1,13 +1,14 @@
 import spacy
 
-# Importing Spacy Language Models
 import en_core_web_sm
 import en_core_web_trf
 import en_core_web_md
 
+import nltk
+from nltk.chat.util import Chat, reflections
+
 
 class ChatBot:
-    
 
     def __init__(self, language_model, min_similarity):
         self.language_model = language_model
@@ -22,15 +23,10 @@ class ChatBot:
             return self.language_model == other.language_model
         return False
 
-    def respondTo(self, msg):
-        guide_statement = self.nlp("You are a chatbot who wants to help the user answer their question.")
+    def respond_to(self, msg):
+        guide_statement = self.nlp("?")
         statement = self.nlp(msg)
 
-        print("...")
+        # TODO Make the respond_to function work correctly!
 
-        for ent in statement.ents:
-            print(ent.label_, ent.text)
-
-
-
-
+        return "N/A"
