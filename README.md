@@ -20,4 +20,4 @@
 
 # Project links
 - [Canva presentation](https://www.canva.com/design/DAFn9RvzgCQ/dk9Qgj2STaG24-6P83dszA/edit?utm_content=DAFn9RvzgCQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-- 
+- [Initial Plan](https://www.canva.com/design/DAFn9gO0YVA/9wI72pA60whidJusiAGvyg/edit?utm_content=DAFn9gO0YVA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
