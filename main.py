@@ -3,7 +3,8 @@ import en_core_web_sm
 
 nlp = spacy.load('en_core_web_sm')
 
-def _init():
+
+def __init__():
     nlp = en_core_web_sm.load()
     doc = nlp("Hello World! See how parts of the sentence are separated into different groups!")
 
@@ -11,4 +12,4 @@ def _init():
 
 
 if __name__ == '__main__':
-    _init()
+    __init__()
