@@ -4,8 +4,12 @@ import en_core_web_sm
 import en_core_web_trf
 import en_core_web_md
 
-import nltk
+import nltk as nlkt
+import nltk.data
+
 from nltk.chat.util import Chat, reflections
+from nltk.tokenize.api import TokenizerI
+from nltk.tokenize.punkt import PunktLanguageVars, PunktParameters, PunktToken
 
 
 class ChatBot:
@@ -15,6 +19,8 @@ class ChatBot:
         self.nlp = spacy.load(self.language_model)
         self.min_similarity = min_similarity
 
+        nlkt.download('punkt')
+
     def __str__(self):
         return str(self.language_model)
 
@@ -23,10 +29,28 @@ class ChatBot:
             return self.language_model == other.language_model
         return False
 
-    def respond_to(self, msg):
+    def spacy_tokenize(self, msg):
+        return [token for token in self.nlp(msg)]
+
+    def sent_word_tokenize(self, msg):
+        sent = nltk.sent_tokenize(msg)
+        word = nltk.word_tokenize(msg)
+
+        return sent, word
+
+    def _respond_to(self, msg):
         guide_statement = self.nlp("?")
         statement = self.nlp(msg)
 
-        # TODO Make the respond_to function work correctly!
-
         return "N/A"
+
+    def converse(self):
+        input_msg = None
+
+        while input_msg != "end":
+            input_msg = input("> ")
+
+            print(self._respond_to(input_msg))
+
+            print(self.spacy_tokenize(input_msg))
+            print(self.sent_word_tokenize(input_msg))

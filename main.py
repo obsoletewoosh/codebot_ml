@@ -15,3 +15,4 @@ def _init(language_model):
 
 if __name__ == '__main__':
     _init(language_model='en_core_web_md')
+    chat_bot.converse()
