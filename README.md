@@ -7,7 +7,8 @@ Group 3 Chat bot Project
 3. Press the (+) button at the top
 4. Type in the package name and press install (if it doesn't appear, press the reload button)
 
-# Resources to use!
+# Resources 
+## General
 1. [Attention is all you need](https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
 2. [spaCY library website](https://spacy.io/), [nltk documentation](https://www.nltk.org/)
 3. [Andrej Karpathy breaks down chatGPT](https://www.youtube.com/watch?v=kCc8FmEb1nY)
@@ -15,6 +16,15 @@ Group 3 Chat bot Project
 5. [Andrew Ng's Machine Learning Coursera](https://www.coursera.org/specializations/machine-learning-introduction?adgroupid=1223756914114671&adposition=&campaignid=415343102&creativeid=&device=c&devicemodel=&hide_mobile_promo&keyword=what+is+machine+learning&matchtype=p&msclkid=3cceb78dbe96130bbbc2d325b0bfd35d&network=o&utm_campaign=B2C_NAMER_machine-learning-introduction_stanford_FTCOF_specializations_country-US&utm_content=Machine+Learning+Tutorials&utm_medium=sem&utm_source=bg&utm_term=what+is+machine+learning)
 6. [Video](https://www.youtube.com/watch?v=TQQlZhbC5ps)
 7. [Example of creating weather chatbot using spaCY](https://www.digitalocean.com/community/tutorials/how-to-create-an-intelligent-chatbot-in-python-using-the-spacy-nlp-library)
+8. [Attention is all you need summarized](https://www.youtube.com/watch?v=iDulhoQ2pro)
+
+## Word Embedding
+1. [Wikipedia Article](https://en.wikipedia.org/wiki/Word_embedding)
+2. [Word2Vec and GloVE explained](https://analyticsindiamag.com/word2vec-vs-glove-a-comparative-guide-to-word-embedding-techniques/)
+
+## Encoding and hidden states
+1. [Intuitive explanation of RNNs (Recurrent Neural networks)](https://www.youtube.com/watch?v=LHXXI4-IEns)
+2. [Introduction to LSTEM's and GRU's](https://www.youtube.com/watch?v=8HyCNIVRbSU)
 
 # Project links
 - [Canva presentation](https://www.canva.com/design/DAFn9RvzgCQ/dk9Qgj2STaG24-6P83dszA/edit?utm_content=DAFn9RvzgCQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
