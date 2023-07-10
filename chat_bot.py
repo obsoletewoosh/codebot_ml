@@ -1,79 +1,129 @@
+import nltk as nlkt
+from nltk.stem.lancaster import LancasterStemmer as ls
+import numpy as np
+import tflearn
+import json
+import pickle
+import random
+
 import spacy
 
-import en_core_web_sm
-import en_core_web_trf
-import en_core_web_md
-
-import nltk as nlkt
 import nltk.data
 from nltk.sentiment import SentimentIntensityAnalyzer as sia
 
-from nltk.chat.util import Chat, reflections
-from nltk.tokenize.api import TokenizerI
-from nltk.tokenize.punkt import PunktLanguageVars, PunktParameters, PunktToken
-
+from sklearn.model_selection import train_test_split
 
 # Warning, by scrolling down, you will see me commit (get it haha) a cardinal sin...
 # Commenting lines of code explaining what they do instead of why I did it that way *shock*
 # Doing this so that we can have an easier time with the slideshow & explanations
 
+# TODO Make it so that generated files go into the datafolder and are named correctly if possible...
+
+with open('DataFolder/intents.json') as intents:
+    data = json.load(intents)
+
 
 class ChatBotInfo:
-    def __init__(self, name, autoresponse):
+    def __init__(self, name, desc, train_responses):
         self.name = name
-        self.autoresponse = autoresponse
-
-
-words = None
-stopwords = None
+        self.desc = desc
+        self.train_responses = train_responses
 
 
 class ChatBot:
 
+    def _init_model(self):
+        try:
+            with open('data.pickle', 'rb') as f:
+                words, labels, training, output = pickle.load(f)
+        except:
+            # Fetching and Feeding information--
+            words = []
+            labels = []
+            x_docs = []
+            y_docs = []
+
+            for intent in data['intents']:
+                for pattern in intent['patterns']:
+                    wrds = nltk.word_tokenize(pattern)
+                    words.extend(wrds)
+                    x_docs.append(wrds)
+                    y_docs.append(intent['tag'])
+
+
+                    if intent['tag'] not in labels:
+                        labels.append(intent['tag'])
+
+            words = [ls().stem(w.lower()) for w in words if w not in "?"]
+            words = sorted(list(set(words)))
+            labels = sorted(labels)
+
+            training = []
+            output = []
+
+            out_empty = [0 for _ in range(len(labels))]
+
+            # One hot encoding, Converting the words to numerals
+            for x, doc in enumerate(x_docs):
+                bag = []
+                wrds = [ls().stem(w) for w in doc]
+                for w in words:
+                    if w in wrds:
+                        bag.append(1)
+                    else:
+                        bag.append(0)
+
+                output_row = out_empty[:]
+                output_row[labels.index(y_docs[x])] = 1
+
+                training.append(bag)
+                output.append(output_row)
+
+            training = np.array(training)
+            output = np.array(output)
+
+            with open('data.pickle', 'wb') as f:
+                pickle.dump((words, labels, training, output), f)
+
+        net = tflearn.input_data(shape=[None, len(training[0])])
+        net = tflearn.fully_connected(net, 8)
+        net = tflearn.fully_connected(net, 8)
+        net = tflearn.fully_connected(net, len(output[0]), activation='softmax')
+        net = tflearn.regression(net)
+
+        model = tflearn.DNN(net)
+
+        try:
+            model.load(self.info.name.strip(" ")+"model.tflearn")
+        except:
+            model = tflearn.DNN(net)
+            model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
+            model.save(self.info.name.strip(" ")+'model.tflearn')
+
+        return model, words, labels
+
     def __init__(self, language_model, min_similarity, info):
+        self.s_words = None
+        self.bag = None
+
         self.language_model = language_model
         self.nlp = spacy.load(self.language_model)
         self.min_similarity = min_similarity
         self.info = info
 
-        nltk.download([
-            "names",
-            "stopwords",
-            "state_union",
-            "twitter_samples",
-            "movie_reviews",
-            "averaged_perceptron_tagger",
-            "vader_lexicon",
-            "punkt",
-        ])
+        self.model, self.words, self.labels = self._init_model()
+        print(self.model)
 
-        # Testing purposes only can safely be deleted later 7/7/2023
-        nltk.download('shakespeare')
+    def word_bag(self, s, words):
+        self.bag = [0 for _ in range(len(words))]
+        self.s_words = [ls().stem(word.lower()) for word in nltk.word_tokenize(s)]
 
-        global words
-        global stopwords
+        for se in self.s_words:
+            for i, w in enumerate(words):
+                if w == se:
+                    self.bag[i] = 1
 
-        words = [word for word in nltk.corpus.state_union.words() if word.isalpha()]  # Alphanumeric :D
-        stopwords = nltk.corpus.stopwords.words('english')
-
-        pol_scores = sia().polarity_scores("Yes")  # Detecting positive/negative/neutral tone
-        print(pol_scores)
-
-        print(words[0:50])
-
-        words = [word for word in words if word.lower() not in stopwords]  # Removed the undesired words!
-        # TODO Work on implementing data analysis into a single function. Return large dataset or variables to manage
-        #   complexity.
-
-        print(words[0:50])
-
-    def __str__(self):
-        return str(self.language_model)
-
-    def __eq__(self, other):
-        if type(other) is type(self):
-            return self.language_model == other.language_model
-        return False
+        return np.array(self.bag)
 
     def spacy_tokenize(self, msg):
         return [token for token in self.nlp(msg)]
@@ -112,17 +162,22 @@ class ChatBot:
         return "N/A"
 
     def converse(self):
-        input_msg = None
+        global data
 
-        self._get_info("")
-
-        while input_msg != "end":
+        while True:
             input_msg = input("> ")
 
-            print(self._respond_to(input_msg))
+            if input_msg == "end":
+                break
 
-            print(self.spacy_tokenize(input_msg))
-            print(self.sent_word_tokenize(input_msg))
+            results = self.model.predict([self.word_bag(input_msg, self.words)])
 
-            print("epic")
-            self._get_info(input_msg)
+            results_index = np.argmax(results)
+
+            tag = self.labels[results_index]
+
+            for i in data['intents']:
+
+                if i['tag'] == tag:
+                    responses = i['responses']
+                    print(self.info.name + ": " + random.choice(responses))
