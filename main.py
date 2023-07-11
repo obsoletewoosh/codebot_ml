@@ -1,8 +1,6 @@
-import spacy
-import en_core_web_sm
-import en_core_web_md
+from codebot_ml.KeywordBot.chat_bot_keyword import ChatBot, ChatBotInfo
+from codebot_ml.GenerativeBot.generative_chat_bot import GenChatBot
 
-from chat_bot import ChatBot, ChatBotInfo
 
 chat_bot = None
 
@@ -15,5 +13,6 @@ def _init(language_model):
 
 
 if __name__ == '__main__':
-    _init(language_model='en_core_web_md')
-    chat_bot.converse()
+    #_init(language_model='en_core_web_md')
+    #chat_bot.converse()
+    GenChatBot("Joe")
