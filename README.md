@@ -25,6 +25,7 @@ Group 3 Chat bot Project
 ## Encoding and hidden states
 1. [Intuitive explanation of RNNs (Recurrent Neural networks)](https://www.youtube.com/watch?v=LHXXI4-IEns)
 2. [Introduction to LSTEM's and GRU's](https://www.youtube.com/watch?v=8HyCNIVRbSU)
+3. [Pointwise addition and multiplication](https://en.wikipedia.org/wiki/Pointwise)
 
 # Project links
 - [Canva presentation](https://www.canva.com/design/DAFn9RvzgCQ/dk9Qgj2STaG24-6P83dszA/edit?utm_content=DAFn9RvzgCQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
